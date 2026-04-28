@@ -1,0 +1,67 @@
+@startuml classesDominio
+
+title Diagrama de Classes BikeToGo
+
+class Servico {
+    ~ observacao : String
+}
+
+class Produto {
+    ~ quantidade : int
+    + verificarDisponibilidade int quantidade) : boolean
+}
+
+abstract class Item {
+    ~ nome : String
+    ~ descricao : String
+    ~ valor : double
+}
+
+class Pedido {
+    ~ data : data
+    ~ static ID : int
+    ~ status : String
+    + calcularValor (itensPedidos) : double
+    + adicionarItem (itensPedidos) : void
+}
+
+class Empresa {
+    - nomeEmpresa : String
+    - CNPJ : String
+    - telefone : String
+    + adicionarItem(<Array> Item) : void
+    + removerItem (<Array> Item) : void
+}
+
+class Cliente {
+    - nome : String
+    - telefone : String
+    - CPF : String
+    + adicionarPedido(Pedido) : void
+}
+
+class Endereco {
+    - rua : String
+    - numero : int
+    - quadra : String
+    - referencia : String
+    - CEP : String
+}
+
+' Relações:
+
+Servico --|> Item
+Produto --|> Item
+
+Item "1..*" --o "1" Pedido
+
+Pedido "0..*" --> "1" Empresa
+Pedido "0..*" *-- "1" Cliente
+
+Empresa "0..*" --> "1" Endereco
+Cliente "0..*" --> "1" Endereco
+
+
+
+@enduml
+

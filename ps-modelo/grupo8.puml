@@ -1,0 +1,76 @@
+@startuml
+class Jogo {
+  - nome: String
+  - genero: String
+  - regas: String
+  + entrarJogo(): void
+  + sairJogo(): void
+}
+
+class Partida {
+  - duracao: float
+  - resultado: String
+  + iniciar(): void
+  + finalizar(): void
+}
+
+class LeaderBoard {
+  + mostrarTop(int quantidadeTop, Ranking r): void
+}
+
+class Ranking {
+  - posicao: int
+  - pontuacao: int
+}
+
+class Jogador {
+  - nickname: String
+  - nivel: int
+  + entrarPartida(Partida p): void
+  + visualizarRanking(Ranking r): void
+}
+
+class Conquista {
+  - nome: String
+  - adquirido: boolean
+}
+
+class Requisitos {
+  - verbonseNome: String
+}
+
+class Inventario {
+  + coletarItem(Item i): void
+  + deletarItem(Item i): void
+}
+
+class Item {
+  - ID: int
+  - quantidade: int
+  - durabilidade: float
+  + usar(): void
+  + chegarDurabilidade() : void
+}
+
+class Estatistica {
+  - forca: int
+  - vida: int
+  - intelecto: int
+  - velocidade: int
+}
+
+' Relationships
+
+Jogo "1" --> "1..*" Partida
+Partida "1" --> "1..*" Jogador
+Partida "1" --> "1" LeaderBoard
+LeaderBoard "1" --> "1..*" Ranking
+
+Jogador "1" --> "1..*" Inventario
+Jogador "1" --> "1" Estatistica
+Jogador "1" --> "0..*" Conquista
+Jogador "1" --> "1" Ranking
+Conquista "1" --|> "1..*" Requisitos
+Inventario "1" --> "0..*" Item
+
+@enduml

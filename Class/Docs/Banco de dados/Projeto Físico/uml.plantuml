@@ -1,0 +1,116 @@
+@startuml
+
+!theme reddress-darkblue
+    class Usuario {
+        +login: string
+        #senha: string
+    }
+
+    class Perfil {
+        +id_perfil: int
+        +nome: string
+        +email: string
+        +idade: int
+        +status: string
+        +descricao: string
+        +areas_estudo: string[]
+        +membro_desde: date
+        +ultimo_login: datetime
+    }
+
+    class ItensAvatar {
+        +id_item: int
+        +nome: string
+        +tipo: string
+        +recurso: string
+    }
+
+    class Avatar {
+        +id_avatar: int
+    }
+
+    class Grupo {
+        +nome: string
+        +descricao: string
+        +idioma: string
+        +foto_capa: string
+    }
+
+    class Sessao {
+        +id_sessao: int
+        +inicio: datetime
+        +fim: datetime
+        +duracao: timespan
+        +area: string
+        +modelo: string
+        +tipo: string
+    }
+
+    class Conversa {
+        +id_conversa: int
+        +nome: string 
+        +data_criacao: datetime
+        +tipo: string
+    }
+
+    class Mensagem {
+        +id_mensagem: int
+        +conteudo: string
+        +data_hora: datetime
+    }
+
+    class ToDo {
+        +id_todo: int
+    }
+
+    class Tarefa {
+        +id_tarefa: int
+        +nome: string 
+        +prazo: date
+        +pagina: string
+        +criacao: datetime
+        +status: string
+        +data_concluido: date
+    }
+
+    class Objetivo {
+        +id_objetivo: int
+        +nome: string
+        +criacao: datetime
+        +horas: int
+    }
+
+
+    Usuario "1" -- "1" Perfil : possui
+
+    Perfil "1" -- "1" Avatar : tem
+    Avatar "1" -- "*" ItensAvatar : contem
+
+    class membro_de {
+        +desde: date
+    }
+    Perfil "*" -- "*" membro_de 
+    Perfil "*" -- "*" Sessao  
+    membro_de "*" -- "*" Grupo 
+
+    
+    Perfil "1" -- "1" ToDo : possui
+    ToDo "1" -- "*" Tarefa : contem
+
+    Perfil "1" -- "*" Objetivo : define
+
+    Perfil "1" -- "*" Mensagem : envia
+    Mensagem "*" -- "1" Conversa
+    Perfil "*" -- "*" participa_de  
+    participa_de "*" -- "*" Conversa  
+    Grupo "1" -- "1"   Conversa
+
+    Grupo "1" -- "*" Sessao : realiza
+
+    Objetivo "1" -- "*" Tarefa 
+
+    class participa_de {
+        +desde: date
+    }
+
+@enduml
